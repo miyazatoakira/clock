@@ -22,3 +22,4 @@ In this project Digital-Clock is developed by using only JS.
 
 [Digital Clock Project](https://alitahir4024.github.io/Digital-Clock-Project-JS/)
 # clock
+# clock
