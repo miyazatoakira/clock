@@ -43,7 +43,7 @@
 
 .clock h2 {
     position: relative;
-    top: 6rem;
+    top: 4rem;
     width: 100%;
     letter-spacing: 2px;
     color: #ffffff; 
@@ -83,7 +83,7 @@
 
 .clock h3 {
     position: relative;
-    bottom: 6rem;
+    bottom: 0.4rem;
     width: 95%;
     letter-spacing: 3px;
     color: #ffffff; 
@@ -94,7 +94,13 @@
 
 .bi{
     position: absolute;
-    top:5.5rem;
+    top:1rem;
     font-size: 1.8rem;
     color: rgb(231, 230, 230);
+}
+
+
+.digital-clock{
+    position: relative;
+    top: 2rem;
 }
