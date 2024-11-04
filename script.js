@@ -6,6 +6,7 @@ trocaIcone();
 
 function handler() {
   const date = new Date();
+
   const hour = date.getHours().toString().padStart(2, '0');
   const mint = date.getMinutes().toString().padStart(2, '0');
   const sec = date.getSeconds().toString().padStart(2, '0');
@@ -16,9 +17,7 @@ function handler() {
   timeElements[3].innerHTML = ":";
   timeElements[4].innerHTML = sec;
 
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const year = date.getFullYear();
+  let variavel = hour === 18 ? window.location.reload() : ""; 
 }
 
 function changeRootVariables(backgroundColor, textColor, iconColor) {
@@ -31,7 +30,7 @@ function changeRootVariables(backgroundColor, textColor, iconColor) {
 
 function trocaIcone() {
   const hour = new Date().getHours();
-  if( hour < 18 ){
+  if( hour < 18 && hour > 3 ){
     changeRootVariables('#ffffff', 'rgb(50, 50, 50)', 'rgb(58, 57, 57)');
     icon.className = "bi bi-brightness-high-fill";
   }
