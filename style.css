@@ -110,7 +110,7 @@
     top: 2rem;
 }
 
-h4{
+.clock h4{
     margin-right: -8.6484rem; 
     margin-top: -5rem;
     color: var(--text-color);
