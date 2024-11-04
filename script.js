@@ -1,59 +1,56 @@
-var time = document.getElementsByTagName("p")[0];
-var time_1 = document.getElementsByTagName("p")[1];
-var time_2 = document.getElementsByTagName("p")[2];
-var time_3 = document.getElementsByTagName("p")[3];
-var time_4 = document.getElementsByTagName("p")[4];
-var time_6 = document.createElement("p"); 
-let icon = document.getElementById("icon");
-
-document.querySelector(".numbers").appendChild(time_6);
-
-var date_1 = document.getElementsByTagName("h6")[0];
-var date_2 = document.getElementsByTagName("h6")[1];
-var date_3 = document.getElementsByTagName("h6")[2];
-var date_4 = document.getElementsByTagName("h6")[3];
-var date_5 = document.getElementsByTagName("h6")[4];
+const timeElements = document.querySelectorAll('.numbers p');
+const icon = document.querySelector("#icone");
 
 setInterval(handler, 1000);
-setInterval(trocaIcone, 1000 * 1800);
+trocaIcone();
 
 function handler() {
-    var date = new Date();
-    var hour = date.getHours();
-    var mint = date.getMinutes();
-    var sec = date.getSeconds();
-    
-    time.innerHTML = `${hour}`;
-    time_1.innerHTML = ":";
-    if(mint<=9){
-        time_2.innerHTML = `0${mint}`;
-    }
-    else{
-        time_2.innerHTML = `${mint}`;
+  const date = new Date();
+  const hour = date.getHours().toString().padStart(2, '0');
+  const mint = date.getMinutes().toString().padStart(2, '0');
+  const sec = date.getSeconds().toString().padStart(2, '0');
 
-    }
-    time_3.innerHTML = ":";
-    time_4.innerHTML = `${sec}`;
+  timeElements[0].innerHTML = hour;
+  timeElements[1].innerHTML = ":";
+  timeElements[2].innerHTML = mint;
+  timeElements[3].innerHTML = ":";
+  timeElements[4].innerHTML = sec;
 
-    var month = date.getMonth() + 1;
-    var day = date.getDate();
-    var year = date.getFullYear();
-    
-    date_1.innerHTML = `${month}`;
-    date_2.innerHTML = " - ";
-    date_3.innerHTML = `${day}`;
-    date_4.innerHTML = " - ";
-    date_5.innerHTML = `${year}`;
-
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const year = date.getFullYear();
 }
 
-function trocaIcone(){
-    if(hour >18){
-        icon.classList.remove("bi bi-brightness-alt-high-fill");
-        icon.classList.add("bi bi-moon-fill");
-    }
-    else{
-        icon.classList.remove("bi bi-moon-fill");
-        icon.classList.add("bi bi-brightness-alt-high-fill");
+function trocaIcone() {
+  const hour = new Date().getHours();
+  icon.className = hour < 18 ? "bi bi-brightness-high-fill" : "bi bi-moon-fill";
+}
+
+let wakeLock = null;
+
+async function requestWakeLock() {
+    try {
+        wakeLock = await navigator.wakeLock.request('screen');
+        console.log('Wake Lock is active');
+    } catch (err) {
+        console.error(`${err.name}, ${err.message}`);
     }
 }
+
+async function releaseWakeLock() {
+    if (wakeLock !== null) {
+        await wakeLock.release();
+        wakeLock = null;
+        console.log('Wake Lock has been released');
+    }
+}
+
+document.addEventListener('visibilitychange', async () => {
+    if (document.visibilityState === 'visible') {
+        await requestWakeLock();
+    } else {
+        await releaseWakeLock();
+    }
+});
+
+requestWakeLock();
