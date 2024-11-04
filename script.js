@@ -21,10 +21,26 @@ function handler() {
   const year = date.getFullYear();
 }
 
+function changeRootVariables(backgroundColor, textColor, iconColor) {
+  const root = document.documentElement;
+
+  root.style.setProperty('--background', backgroundColor);
+  root.style.setProperty('--text-color', textColor);
+  root.style.setProperty('--icon-color', iconColor)
+}
+
 function trocaIcone() {
   const hour = new Date().getHours();
-  icon.className = hour < 18 ? "bi bi-brightness-high-fill" : "bi bi-moon-fill";
-}
+  if( hour < 18 ){
+    changeRootVariables('#ffffff', 'rgb(50, 50, 50)', 'rgb(58, 57, 57)');
+    icon.className = "bi bi-brightness-high-fill";
+  }
+  else{
+    changeRootVariables('rgb(50, 50, 50)', '#ffffff', 'rgb(231, 230, 230)');
+    icon.className = "bi bi-moon-fill";
+  }
+  }
+
 
 let wakeLock = null;
 
