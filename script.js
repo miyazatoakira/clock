@@ -17,7 +17,7 @@ function handler() {
   timeElements[3].innerHTML = ":";
   timeElements[4].innerHTML = sec;
 
-  let variavel = hour === 18 ? window.location.reload() : ""; 
+  let variavel = hour == 18 && mint == 0 && sec == 30 ? window.location.reload() : ""; 
 }
 
 function changeRootVariables(backgroundColor, textColor, iconColor) {
