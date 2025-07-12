@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Cronômetro</title>
+
+    <!-- Reaproveita exatamente os mesmos recursos visuais da tela do relógio -->
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+        crossorigin="anonymous"
+    />
+    <link href="https://fonts.googleapis.com/css?family=Cinzel+Decorative&display=swap" rel="stylesheet" />
+
+    <!-- Ajuste rápido para remover a margem branca nativa do <body> e herdar as cores de tema -->
+    <style>
+        html, body {
+	overflow:hidden;
+            background-color: var(--background);
+            color: var(--text-color);
+
+        }
+    </style>
+</head>
+<body>
+    <!-- Botão fixo no topo para alternar tema -->
+    <button id="toggleTheme" class="btn mt-2 position-relative">Alternar tema</button>
+
+    <!-- Estrutura idêntica à da página principal. O display central agora exibirá o cronômetro. -->
+    <section class="clock container-fluid">
+        <!-- ícone sol / lua -->
+        <i class="" id="icone"></i>
+
+        <h2>Você faz parte dos 1%. Você é 1%.</h2>
+
+        <div class="digital-clock text-center">
+            <!-- Mesmo grid de cinco <p>, para manter compatibilidade visual -->
+            <div class="numbers">
+                <p>00</p>
+                <p>:</p>
+                <p>00</p>
+                <p>:</p>
+                <p>00</p>
+            </div>
+            <ul class="labels">
+                <li class="me-5">hora</li>
+                <li class="me-5">min</li>
+                <li class="me-5">seg</li>
+            </ul>
+
+            <!-- Botão para iniciar / pausar o cronômetro -->
+            <button id="startStopBtn" class="btn mt-4">Iniciar</button>
+        </div>
+
+        <h3><i>"Premeditatio malorum."</i></h3>
+        <h4 style="margin-right:0;">- Marcus Aurelius</h4>
+    </section>
+
+    <!-- Script dedicado à página do cronômetro. -->
+    <script>
+        /***********************  Gestão de tema (dia/noite)  ************************/
+        const root = document.documentElement;
+        const icon = document.getElementById('icone');
+        const toggleBtn = document.getElementById('toggleTheme');
+
+        // tema inicial segue a lógica do horário
+        let isDarkMode = !(new Date().getHours() < 18 && new Date().getHours() > 3);
+
+        function applyTheme(dark) {
+            if (dark) {
+                root.style.setProperty('--background', 'rgb(50, 50, 50)');
+                root.style.setProperty('--text-color', '#ffffff');
+                root.style.setProperty('--icon-color', 'rgb(231, 230, 230)');
+                icon.className = 'bi bi-moon-fill';
+            } else {
+                root.style.setProperty('--background', '#ffffff');
+                root.style.setProperty('--text-color', 'rgb(50, 50, 50)');
+                root.style.setProperty('--icon-color', 'rgb(58, 57, 57)');
+                icon.className = 'bi bi-brightness-high-fill';
+            }
+        }
+
+        // aplica ao carregar
+        applyTheme(isDarkMode);
+
+        // alterna ao clicar
+        toggleBtn.addEventListener('click', () => {
+            isDarkMode = !isDarkMode;
+            applyTheme(isDarkMode);
+        });
+
+        /***********************  Cronômetro  ************************/
+        const timeElements = document.querySelectorAll('.numbers p');
+        const startStopBtn = document.getElementById('startStopBtn');
+
+        let intervalId = null;
+        let elapsedMs = 0; // tempo acumulado em milissegundos
+
+        function formatTime(ms) {
+            const totalSeconds = Math.floor(ms / 1000);
+            const hrs = Math.floor(totalSeconds / 3600).toString().padStart(2, '0');
+            const mins = Math.floor((totalSeconds % 3600) / 60).toString().padStart(2, '0');
+            const secs = (totalSeconds % 60).toString().padStart(2, '0');
+            return [hrs, mins, secs];
+        }
+
+        function renderTime() {
+            const [hrs, mins, secs] = formatTime(elapsedMs);
+            timeElements[0].textContent = hrs;
+            timeElements[2].textContent = mins;
+            timeElements[4].textContent = secs;
+        }
+
+        startStopBtn.addEventListener('click', () => {
+            if (intervalId === null) {
+                // Start / Resume
+                startStopBtn.textContent = 'Pausar';
+                const startTimestamp = Date.now() - elapsedMs;
+                intervalId = setInterval(() => {
+                    elapsedMs = Date.now() - startTimestamp;
+                    renderTime();
+                }, 1000);
+            } else {
+                // Pause
+                clearInterval(intervalId);
+                intervalId = null;
+                startStopBtn.textContent = 'Continuar';
+            }
+        });
+
+        // Ao entrar na página, mostra 00:00:00 preparado
+        renderTime();
+
+        /***********************  Wake-lock para manter a tela ativa  ************************/
+        let wakeLock = null;
+
+        async function requestWakeLock() {
+            try {
+                wakeLock = await navigator.wakeLock?.request?.('screen');
+            } catch (err) {
+                console.error(`${err.name}, ${err.message}`);
+            }
+        }
+
+        async function releaseWakeLock() {
+            if (wakeLock !== null) {
+                await wakeLock.release();
+                wakeLock = null;
+            }
+        }
+
+        document.addEventListener('visibilitychange', async () => {
+            if (document.visibilityState === 'visible') {
+                await requestWakeLock();
+            } else {
+                await releaseWakeLock();
+            }
+        });
+
+        requestWakeLock();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

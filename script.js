@@ -23,12 +23,14 @@ function handler() {
 function changeRootVariables(backgroundColor, textColor, iconColor) {
   const root = document.documentElement;
 
+
   root.style.setProperty('--background', backgroundColor);
   root.style.setProperty('--text-color', textColor);
   root.style.setProperty('--icon-color', iconColor)
 }
 
 function trocaIcone() {
+
   const hour = new Date().getHours();
   if( hour < 18 && hour > 3 ){
     changeRootVariables('#ffffff', 'rgb(50, 50, 50)', 'rgb(58, 57, 57)');
@@ -45,6 +47,7 @@ let wakeLock = null;
 
 async function requestWakeLock() {
     try {
+	
         wakeLock = await navigator.wakeLock.request('screen');
         console.log('Wake Lock is active');
     } catch (err) {
@@ -53,15 +56,19 @@ async function requestWakeLock() {
 }
 
 async function releaseWakeLock() {
+
     if (wakeLock !== null) {
         await wakeLock.release();
+
         wakeLock = null;
         console.log('Wake Lock has been released');
     }
 }
 
 document.addEventListener('visibilitychange', async () => {
+
     if (document.visibilityState === 'visible') {
+
         await requestWakeLock();
     } else {
         await releaseWakeLock();
