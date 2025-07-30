@@ -1,6 +1,6 @@
-:root{
-    --background: rgb(30, 28, 28) ;
-    --text-color: #ffff ;
+:root {
+    --background: rgb(30, 28, 28);
+    --text-color: #ffff;
     --icon-color: rgb(231, 230, 230);
 }
 * {
@@ -36,14 +36,14 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: center; /* Centraliza todo o conteúdo */
-    font-family: 'gotham-book', cursive;
+    font-family: "gotham-book", cursive;
 }
 
 .clock p {
     font-size: 8rem;
     letter-spacing: 5px;
-    color: var(--text-color); 
-    font-family: 'gotham-medium', cursive;
+    color: var(--text-color);
+    font-family: "gotham-medium", cursive;
 }
 
 .clock h2 {
@@ -51,9 +51,9 @@
     top: 4rem;
     width: 100%;
     letter-spacing: 2px;
-    color: var(--text-color); 
+    color: var(--text-color);
     font-size: 2rem;
-    font-family: 'gotham-bold', cursive;
+    font-family: "gotham-bold", cursive;
     text-align: center;
 }
 
@@ -62,7 +62,6 @@
     flex-direction: row;
     justify-content: center;
 }
-
 
 .clock ul,
 .clock ol {
@@ -74,16 +73,15 @@
 .clock ul li,
 .clock ol li {
     font-size: 2rem;
-    color: var(--text-color); 
+    color: var(--text-color);
     text-transform: capitalize;
-    font-family: 'gotham-book', cursive;
+    font-family: "gotham-book", cursive;
 }
 
 .clock h6 {
     font-size: 4rem;
-    color: var(--text-color); 
-    font-family: 'gotham-book', cursive;
-    
+    color: var(--text-color);
+    font-family: "gotham-book", cursive;
 }
 
 .clock h3 {
@@ -91,27 +89,29 @@
     bottom: 0.4rem;
     width: 95%;
     letter-spacing: 3px;
-    color: var(--text-color); 
+    color: var(--text-color);
     font-size: 2rem;
-    font-family: 'gotham-bold', cursive;
+    font-family: "gotham-bold", cursive;
     text-align: center;
 }
 
-.bi{
+.bi {
     position: absolute;
-    top:1rem;
+    top: 1rem;
     font-size: 1.8rem;
     color: var(--icon-color);
 }
 
-
-.digital-clock{
+.digital-clock {
     position: relative;
     top: 2rem;
 }
 
-.clock h4{
-    margin-right: -8.6484rem; 
+.clock h4 {
+    margin-right: -8.6484rem;
     margin-top: -5rem;
     color: var(--text-color);
+}
+#header {
+    background-color: var(--background);
 }
