@@ -34,6 +34,15 @@
                 Ir para Cronômetro
             </button>
         </div>
+        <!-- Welcome toast (once per day) -->
+        <div id="welcome-toast" style="display:none">
+            <span class="toast-icon">🌸</span>
+            <div class="toast-text">
+                <span class="toast-name">Marcela</span>
+                <span class="toast-msg">Olá, meu amor. Uma maravilhosa sessão de estudos ✨</span>
+            </div>
+        </div>
+
         <section class="clock container-fluid">
             <i class="" id="icone"></i>
             <h2>Obrigado, Deus !</h2>
@@ -96,6 +105,23 @@
         function toggleCronometer() {
             window.location.href = "./cronometro.html";
         }
+
+        /* ---- Welcome toast: once per calendar day ---- */
+        (function() {
+            const TODAY = new Date().toDateString();
+            const LAST  = localStorage.getItem('welcome_shown_date');
+            if (LAST === TODAY) return;
+            localStorage.setItem('welcome_shown_date', TODAY);
+
+            const toast = document.getElementById('welcome-toast');
+            toast.style.display = 'flex';
+
+            // Auto-hide after 4 s
+            setTimeout(() => {
+                toast.classList.add('hide');
+                toast.addEventListener('animationend', () => toast.style.display = 'none', { once: true });
+            }, 4000);
+        })();
     </script>
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

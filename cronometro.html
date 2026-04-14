@@ -83,6 +83,71 @@
             <h4 style="margin-right: 0">- Aristóteles</h4>
         </section>
 
+        <!-- ============================================================
+             MILESTONE 1 — 1 HOUR  (rose deep pink)
+        ============================================================ -->
+        <div id="milestone-1" class="milestone-overlay">
+            <div class="m-canvas" id="m1-canvas"></div>
+            <div class="milestone-card m-card-inner">
+                <div class="m-icon">❤️</div>
+                <div class="m-title">Uma hora!</div>
+                <div class="m-msg">
+                    Parabéns mesmo pelo empenho, amor.<br>
+                    Eu fico muito orgulhoso de você — sempre.<br>
+                    Continua assim, tá indo muito bem 🤍
+                </div>
+                <button class="m-dismiss" id="m1-dismiss">Continuar estudando &rarr;</button>
+            </div>
+        </div>
+
+        <!-- ============================================================
+             MILESTONE 2 — 2 HOURS  (amber / warm gold)
+        ============================================================ -->
+        <div id="milestone-2" class="milestone-overlay">
+            <div class="milestone-card m-card-inner">
+                <div class="m-icon-wrap">
+                    <span class="m-moon">🌙</span>
+                    <span class="m-star-orbit">✨</span>
+                    <span class="m-star-orbit2">⭐</span>
+                </div>
+                <div class="m-title">Duas horas, amor.</div>
+                <div class="m-msg">
+                    Se cuida. Bebe água, descansa os olhos.<br>
+                    Você já fez muito — estou aqui, te amando.<br>
+                    Amo você!!!!!
+                </div>
+                <div class="m-reminders">
+                    <div class="m-reminder-item"><span>💧</span><span>Água</span></div>
+                    <div class="m-reminder-item"><span>👁️</span><span>Olhos</span></div>
+                    <div class="m-reminder-item"><span>🧘</span><span>Respira</span></div>
+                    <div class="m-reminder-item"><span>🤸</span><span>Alonga</span></div>
+                </div>
+                <button class="m-dismiss" id="m2-dismiss">Continuar estudando &rarr;</button>
+            </div>
+        </div>
+
+        <!-- ============================================================
+             MILESTONE 3 — 3 HOURS  (violet / celebration)
+        ============================================================ -->
+        <div id="milestone-3" class="milestone-overlay">
+            <img class="m-bg-photo" src="./pexels-photo-280277.jpeg" alt="" />
+            <div class="m-canvas" id="m3-canvas"></div>
+            <div class="milestone-card m-card-inner">
+                <div class="m-icon">🎉✨</div>
+                <div class="m-title">Três horas!!</div>
+                <div class="m-msg">
+                    Você é incrível, Marcela.<br>
+                    Três horas inteiras de dedicação — isso não é qualquer coisa.<br>
+                    É quem você é: forte, determinada, linda.
+                </div>
+                <div class="m-msg-extra">
+                    Merece muitos beijos e muitos abraços<br>
+                    da próxima vez que nos vermos! 💕
+                </div>
+                <button class="m-dismiss" id="m3-dismiss">Celebrar &amp; continuar 🌸</button>
+            </div>
+        </div>
+
         <!-- Script dedicado à página do cronômetro. -->
         <script>
             /***********************  Gestão de tema (dia/noite)  ************************/
@@ -132,6 +197,9 @@
             let intervalId = null;
             let elapsedMs = 0; // tempo acumulado em milissegundos
 
+            // Milestones already shown this session
+            const shownMilestones = new Set();
+
             function formatTime(ms) {
                 const totalSeconds = Math.floor(ms / 1000);
                 const hrs = Math.floor(totalSeconds / 3600)
@@ -151,6 +219,90 @@
                 timeElements[4].textContent = secs;
             }
 
+            /* ---- Milestone helpers ---- */
+            function showMilestone(id) {
+                const el = document.getElementById(id);
+                el.classList.add('visible');
+            }
+            function hideMilestone(id) {
+                const el = document.getElementById(id);
+                el.classList.add('hiding');
+                el.addEventListener('transitionend', () => {
+                    el.classList.remove('visible', 'hiding');
+                }, { once: true });
+            }
+
+            /* ---- Milestone 1: floating hearts ---- */
+            function spawnHearts() {
+                const canvas = document.getElementById('m1-canvas');
+                canvas.innerHTML = '';
+                const emojis = ['❤️','💕','💖','💗','💓'];
+                for (let i = 0; i < 24; i++) {
+                    const el = document.createElement('span');
+                    el.className = 'floating-heart';
+                    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    el.style.left = Math.random() * 100 + '%';
+                    el.style.fontSize = (1 + Math.random() * 1.5) + 'rem';
+                    el.style.animationDuration = (4 + Math.random() * 6) + 's';
+                    el.style.animationDelay   = (Math.random() * 4) + 's';
+                    canvas.appendChild(el);
+                }
+            }
+
+            /* ---- Milestone 3: confetti + hearts ---- */
+            function spawnConfetti() {
+                const canvas = document.getElementById('m3-canvas');
+                canvas.innerHTML = '';
+                const colors = ['#ff6bff','#a855f7','#60a5fa','#f472b6','#fbbf24','#34d399'];
+                // confetti squares
+                for (let i = 0; i < 60; i++) {
+                    const el = document.createElement('div');
+                    el.className = 'confetti-piece';
+                    el.style.left = Math.random() * 100 + '%';
+                    el.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    el.style.animationDuration = (2.5 + Math.random() * 4) + 's';
+                    el.style.animationDelay   = (Math.random() * 3) + 's';
+                    el.style.width  = (7 + Math.random() * 8) + 'px';
+                    el.style.height = (7 + Math.random() * 8) + 'px';
+                    canvas.appendChild(el);
+                }
+                // hearts raining
+                const heartEmojis = ['💜','❤️','💖','💕','✨','🌸'];
+                for (let i = 0; i < 20; i++) {
+                    const el = document.createElement('span');
+                    el.className = 'confetti-heart';
+                    el.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+                    el.style.left = Math.random() * 100 + '%';
+                    el.style.animationDuration = (3 + Math.random() * 4) + 's';
+                    el.style.animationDelay   = (Math.random() * 4) + 's';
+                    canvas.appendChild(el);
+                }
+            }
+
+            /* ---- Dismiss buttons ---- */
+            document.getElementById('m1-dismiss').addEventListener('click', () => hideMilestone('milestone-1'));
+            document.getElementById('m2-dismiss').addEventListener('click', () => hideMilestone('milestone-2'));
+            document.getElementById('m3-dismiss').addEventListener('click', () => hideMilestone('milestone-3'));
+
+            /* ---- Milestone check on every tick ---- */
+            function checkMilestones() {
+                const totalMins = Math.floor(elapsedMs / 60000);
+                if (totalMins >= 60 && !shownMilestones.has(1)) {
+                    shownMilestones.add(1);
+                    spawnHearts();
+                    showMilestone('milestone-1');
+                }
+                if (totalMins >= 120 && !shownMilestones.has(2)) {
+                    shownMilestones.add(2);
+                    showMilestone('milestone-2');
+                }
+                if (totalMins >= 180 && !shownMilestones.has(3)) {
+                    shownMilestones.add(3);
+                    spawnConfetti();
+                    showMilestone('milestone-3');
+                }
+            }
+
             startStopBtn.addEventListener("click", () => {
                 if (intervalId === null) {
                     // Start / Resume
@@ -159,6 +311,7 @@
                     intervalId = setInterval(() => {
                         elapsedMs = Date.now() - startTimestamp;
                         renderTime();
+                        checkMilestones();
                     }, 1000);
                 } else {
                     // Pause
