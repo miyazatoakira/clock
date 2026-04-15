@@ -1,362 +1,368 @@
 <!doctype html>
 <html lang="pt-br">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>Cronômetro</title>
 
-        <!-- Reaproveita exatamente os mesmos recursos visuais da tela do relógio -->
-        <link rel="stylesheet" href="style.css" />
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-        />
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-            crossorigin="anonymous"
-        />
-        <link
-            href="https://fonts.googleapis.com/css?family=Cinzel+Decorative&display=swap"
-            rel="stylesheet"
-        />
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Cronômetro</title>
 
-        <!-- Ajuste rápido para remover a margem branca nativa do <body> e herdar as cores de tema -->
-        <style>
-            html,
-            body {
-                overflow: hidden;
-                background-color: var(--background);
-                color: var(--text-color);
-            }
-        </style>
-    </head>
-    <body>
-        <!-- Botão fixo no topo para alternar tema -->
-        <div class="container-fluid">
-            <button id="toggleTheme" class="btn position-relative">
-                Alternar tema
-            </button>
-            <button
-                id="toggleClock"
-                onclick="toggleClockDisplay()"
-                class="btn position-absolute top-0 end-0 me-4"
-            >
-                Ir para Relógio
-            </button>
+    <!-- Reaproveita exatamente os mesmos recursos visuais da tela do relógio -->
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css?family=Cinzel+Decorative&display=swap" rel="stylesheet" />
+
+    <!-- Ajuste rápido para remover a margem branca nativa do <body> e herdar as cores de tema -->
+    <style>
+        html,
+        body {
+            overflow: hidden;
+            background-color: var(--background);
+            color: var(--text-color);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Botão fixo no topo para alternar tema -->
+    <div class="container-fluid">
+        <button id="toggleTheme" class="btn position-relative">
+            Alternar tema
+        </button>
+        <button id="toggleClock" onclick="toggleClockDisplay()" class="btn position-absolute top-0 end-0 me-4">
+            Ir para Relógio
+        </button>
+    </div>
+
+    <div id="welcome-toast" style="display:none">
+        <span class="toast-icon">🌸</span>
+        <div class="toast-text">
+            <span class="toast-name">Marcela</span>
+            <span class="toast-msg">Olá. Uma maravilhosa sessão de estudos.</span>
+        </div>
+    </div>
+
+    <!-- Estrutura idêntica à da página principal. O display central agora exibirá o cronômetro. -->
+    <section class="clock container-fluid">
+        <!-- ícone sol / lua -->
+        <i class="" id="icone"></i>
+
+        <h2>Obrigado, Deus !</h2>
+
+        <div class="digital-clock text-center">
+            <!-- Mesmo grid de cinco <p>, para manter compatibilidade visual -->
+            <div class="numbers">
+                <p>00</p>
+                <p>:</p>
+                <p>00</p>
+                <p>:</p>
+                <p>00</p>
+            </div>
+            <ul class="labels">
+                <li class="me-5">hora</li>
+                <li class="me-5">min</li>
+                <li class="me-5">seg</li>
+            </ul>
+
+            <!-- Botão para iniciar / pausar o cronômetro -->
+            <button id="startStopBtn" class="btn mt-4">Iniciar</button>
         </div>
 
-        <!-- Estrutura idêntica à da página principal. O display central agora exibirá o cronômetro. -->
-        <section class="clock container-fluid">
-            <!-- ícone sol / lua -->
-            <i class="" id="icone"></i>
+        <h3>
+            <i>"Somos o que fazemos repetidamente. <br />A excelência,
+                portanto, não é um ato, mas um hábito."</i>
+        </h3>
+        <h4 style="margin-right: 0">- Aristóteles</h4>
+    </section>
 
-            <h2>Obrigado, Deus !</h2>
-
-            <div class="digital-clock text-center">
-                <!-- Mesmo grid de cinco <p>, para manter compatibilidade visual -->
-                <div class="numbers">
-                    <p>00</p>
-                    <p>:</p>
-                    <p>00</p>
-                    <p>:</p>
-                    <p>00</p>
-                </div>
-                <ul class="labels">
-                    <li class="me-5">hora</li>
-                    <li class="me-5">min</li>
-                    <li class="me-5">seg</li>
-                </ul>
-
-                <!-- Botão para iniciar / pausar o cronômetro -->
-                <button id="startStopBtn" class="btn mt-4">Iniciar</button>
-            </div>
-
-            <h3>
-                <i
-                    >"Somos o que fazemos repetidamente. <br />A excelência,
-                    portanto, não é um ato, mas um hábito."</i
-                >
-            </h3>
-            <h4 style="margin-right: 0">- Aristóteles</h4>
-        </section>
-
-        <!-- ============================================================
+    <!-- ============================================================
              MILESTONE 1 — 1 HOUR  (rose deep pink)
         ============================================================ -->
-        <div id="milestone-1" class="milestone-overlay">
-            <div class="m-canvas" id="m1-canvas"></div>
-            <div class="milestone-card m-card-inner">
-                <div class="m-icon">❤️</div>
-                <div class="m-title">Uma hora!</div>
-                <div class="m-msg">
-                    Parabéns mesmo pelo empenho, amor.<br>
-                    Eu fico muito orgulhoso de você — sempre.<br>
-                    Continua assim, tá indo muito bem 🤍
-                </div>
-                <button class="m-dismiss" id="m1-dismiss">Continuar estudando &rarr;</button>
+    <div id="milestone-1" class="milestone-overlay">
+        <div class="m-canvas" id="m1-canvas"></div>
+        <div class="milestone-card m-card-inner">
+            <div class="m-icon">❤️</div>
+            <div class="m-title">Uma hora!</div>
+            <div class="m-msg">
+                Parabéns mesmo pelo empenho, amor.<br>
+                Continua assim ! ❤️
             </div>
+            <button class="m-dismiss" id="m1-dismiss">Continuar estudando &rarr;</button>
         </div>
+    </div>
 
-        <!-- ============================================================
+    <!-- ============================================================
              MILESTONE 2 — 2 HOURS  (amber / warm gold)
         ============================================================ -->
-        <div id="milestone-2" class="milestone-overlay">
-            <div class="milestone-card m-card-inner">
-                <div class="m-icon-wrap">
-                    <span class="m-moon">🌙</span>
-                    <span class="m-star-orbit">✨</span>
-                    <span class="m-star-orbit2">⭐</span>
-                </div>
-                <div class="m-title">Duas horas, amor.</div>
-                <div class="m-msg">
-                    Se cuida. Bebe água, descansa os olhos.<br>
-                    Você já fez muito — estou aqui, te amando.<br>
-                    Amo você!!!!!
-                </div>
-                <div class="m-reminders">
-                    <div class="m-reminder-item"><span>💧</span><span>Água</span></div>
-                    <div class="m-reminder-item"><span>👁️</span><span>Olhos</span></div>
-                    <div class="m-reminder-item"><span>🧘</span><span>Respira</span></div>
-                    <div class="m-reminder-item"><span>🤸</span><span>Alonga</span></div>
-                </div>
-                <button class="m-dismiss" id="m2-dismiss">Continuar estudando &rarr;</button>
+    <div id="milestone-2" class="milestone-overlay">
+        <div class="milestone-card m-card-inner">
+            <div class="m-icon-wrap">
+                <span class="m-moon">🌙</span>
+                <span class="m-star-orbit">✨</span>
+                <span class="m-star-orbit2">⭐</span>
             </div>
+            <div class="m-title">Duas horas, meu bem.</div>
+            <div class="m-msg">
+                Se cuida. Bebe água, descansa os olhos.<br>
+                Amo você!!!!!
+            </div>
+            <div class="m-reminders">
+                <div class="m-reminder-item"><span>💧</span><span>Água</span></div>
+                <div class="m-reminder-item"><span>👁️</span><span>Olhos</span></div>
+                <div class="m-reminder-item"><span>🧘</span><span>Respira</span></div>
+                <div class="m-reminder-item"><span>🤸</span><span>Alonga</span></div>
+            </div>
+            <button class="m-dismiss" id="m2-dismiss">Continuar estudando &rarr;</button>
         </div>
+    </div>
 
-        <!-- ============================================================
+    <!-- ============================================================
              MILESTONE 3 — 3 HOURS  (violet / celebration)
         ============================================================ -->
-        <div id="milestone-3" class="milestone-overlay">
-            <img class="m-bg-photo" src="./pexels-photo-280277.jpeg" alt="" />
-            <div class="m-canvas" id="m3-canvas"></div>
-            <div class="milestone-card m-card-inner">
-                <div class="m-icon">🎉✨</div>
-                <div class="m-title">Três horas!!</div>
-                <div class="m-msg">
-                    Você é incrível, Marcela.<br>
-                    Três horas inteiras de dedicação — isso não é qualquer coisa.<br>
-                    É quem você é: forte, determinada, linda.
-                </div>
-                <div class="m-msg-extra">
-                    Merece muitos beijos e muitos abraços<br>
-                    da próxima vez que nos vermos! 💕
-                </div>
-                <button class="m-dismiss" id="m3-dismiss">Celebrar &amp; continuar 🌸</button>
+    <div id="milestone-3" class="milestone-overlay">
+        <img class="m-bg-photo" src="./pexels-photo-280277.jpeg" alt="" />
+        <div class="m-canvas" id="m3-canvas"></div>
+        <div class="milestone-card m-card-inner">
+            <div class="m-icon">🎉✨</div>
+            <div class="m-title">Três horas!!</div>
+            <div class="m-msg">
+                Você é incrível, Marcela.<br>
+                Três horas inteiras de dedicação...<br>
             </div>
+            <div class="m-msg-extra">
+                Merece muitos beijos e muitos abraços<br>
+                da próxima vez que nos vermos! 💕
+            </div>
+            <button class="m-dismiss" id="m3-dismiss">Celebrar &amp; continuar 🌸</button>
         </div>
+    </div>
 
-        <!-- Script dedicado à página do cronômetro. -->
-        <script>
-            /***********************  Gestão de tema (dia/noite)  ************************/
-            const root = document.documentElement;
-            const icon = document.getElementById("icone");
-            const toggleBtn = document.getElementById("toggleTheme");
+    <!-- Script dedicado à página do cronômetro. -->
+    <script>
+        /***********************  Gestão de tema (dia/noite)  ************************/
+        const root = document.documentElement;
+        const icon = document.getElementById("icone");
+        const toggleBtn = document.getElementById("toggleTheme");
 
-            // tema inicial segue a lógica do horário
-            let isDarkMode = !(
-                new Date().getHours() < 18 && new Date().getHours() > 3
-            );
+        // tema inicial segue a lógica do horário
+        let isDarkMode = !(
+            new Date().getHours() < 18 && new Date().getHours() > 3
+        );
 
-            function toggleClockDisplay() {
-                window.location.href = "./index.html";
+        function toggleClockDisplay() {
+            window.location.href = "./index.html";
+        }
+
+        (function () {
+            const TODAY = new Date().toDateString();
+            const LAST = localStorage.getItem('welcome_shown_date');
+            if (LAST === TODAY) return;
+            localStorage.setItem('welcome_shown_date', TODAY);
+
+            const toast = document.getElementById('welcome-toast');
+            toast.style.display = 'flex';
+
+            // Auto-hide after 4 s
+            setTimeout(() => {
+                toast.classList.add('hide');
+                toast.addEventListener('animationend', () => toast.style.display = 'none', { once: true });
+            }, 4000);
+        })();
+
+        function applyTheme(dark) {
+            if (dark) {
+                root.style.setProperty("--background", "rgb(50, 50, 50)");
+                root.style.setProperty("--text-color", "#ffffff");
+                root.style.setProperty(
+                    "--icon-color",
+                    "rgb(231, 230, 230)",
+                );
+                icon.className = "bi bi-moon-fill";
+            } else {
+                root.style.setProperty("--background", "#ffffff");
+                root.style.setProperty("--text-color", "rgb(50, 50, 50)");
+                root.style.setProperty("--icon-color", "rgb(58, 57, 57)");
+                icon.className = "bi bi-brightness-high-fill";
             }
+        }
 
-            function applyTheme(dark) {
-                if (dark) {
-                    root.style.setProperty("--background", "rgb(50, 50, 50)");
-                    root.style.setProperty("--text-color", "#ffffff");
-                    root.style.setProperty(
-                        "--icon-color",
-                        "rgb(231, 230, 230)",
-                    );
-                    icon.className = "bi bi-moon-fill";
-                } else {
-                    root.style.setProperty("--background", "#ffffff");
-                    root.style.setProperty("--text-color", "rgb(50, 50, 50)");
-                    root.style.setProperty("--icon-color", "rgb(58, 57, 57)");
-                    icon.className = "bi bi-brightness-high-fill";
-                }
-            }
+        // aplica ao carregar
+        applyTheme(isDarkMode);
 
-            // aplica ao carregar
+        // alterna ao clicar
+        toggleBtn.addEventListener("click", () => {
+            isDarkMode = !isDarkMode;
             applyTheme(isDarkMode);
+        });
 
-            // alterna ao clicar
-            toggleBtn.addEventListener("click", () => {
-                isDarkMode = !isDarkMode;
-                applyTheme(isDarkMode);
-            });
+        /***********************  Cronômetro  ************************/
+        const timeElements = document.querySelectorAll(".numbers p");
+        const startStopBtn = document.getElementById("startStopBtn");
 
-            /***********************  Cronômetro  ************************/
-            const timeElements = document.querySelectorAll(".numbers p");
-            const startStopBtn = document.getElementById("startStopBtn");
+        let intervalId = null;
+        let elapsedMs = 0; // tempo acumulado em milissegundos
 
-            let intervalId = null;
-            let elapsedMs = 0; // tempo acumulado em milissegundos
+        // Milestones already shown this session
+        const shownMilestones = new Set();
 
-            // Milestones already shown this session
-            const shownMilestones = new Set();
+        function formatTime(ms) {
+            const totalSeconds = Math.floor(ms / 1000);
+            const hrs = Math.floor(totalSeconds / 3600)
+                .toString()
+                .padStart(2, "0");
+            const mins = Math.floor((totalSeconds % 3600) / 60)
+                .toString()
+                .padStart(2, "0");
+            const secs = (totalSeconds % 60).toString().padStart(2, "0");
+            return [hrs, mins, secs];
+        }
 
-            function formatTime(ms) {
-                const totalSeconds = Math.floor(ms / 1000);
-                const hrs = Math.floor(totalSeconds / 3600)
-                    .toString()
-                    .padStart(2, "0");
-                const mins = Math.floor((totalSeconds % 3600) / 60)
-                    .toString()
-                    .padStart(2, "0");
-                const secs = (totalSeconds % 60).toString().padStart(2, "0");
-                return [hrs, mins, secs];
+        function renderTime() {
+            const [hrs, mins, secs] = formatTime(elapsedMs);
+            timeElements[0].textContent = hrs;
+            timeElements[2].textContent = mins;
+            timeElements[4].textContent = secs;
+        }
+
+        /* ---- Milestone helpers ---- */
+        function showMilestone(id) {
+            const el = document.getElementById(id);
+            el.classList.add('visible');
+        }
+        function hideMilestone(id) {
+            const el = document.getElementById(id);
+            el.classList.add('hiding');
+            el.addEventListener('transitionend', () => {
+                el.classList.remove('visible', 'hiding');
+            }, { once: true });
+        }
+
+        /* ---- Milestone 1: floating hearts ---- */
+        function spawnHearts() {
+            const canvas = document.getElementById('m1-canvas');
+            canvas.innerHTML = '';
+            const emojis = ['❤️', '💕', '💖', '💗', '💓'];
+            for (let i = 0; i < 24; i++) {
+                const el = document.createElement('span');
+                el.className = 'floating-heart';
+                el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                el.style.left = Math.random() * 100 + '%';
+                el.style.fontSize = (1 + Math.random() * 1.5) + 'rem';
+                el.style.animationDuration = (4 + Math.random() * 6) + 's';
+                el.style.animationDelay = (Math.random() * 4) + 's';
+                canvas.appendChild(el);
             }
+        }
 
-            function renderTime() {
-                const [hrs, mins, secs] = formatTime(elapsedMs);
-                timeElements[0].textContent = hrs;
-                timeElements[2].textContent = mins;
-                timeElements[4].textContent = secs;
+        /* ---- Milestone 3: confetti + hearts ---- */
+        function spawnConfetti() {
+            const canvas = document.getElementById('m3-canvas');
+            canvas.innerHTML = '';
+            const colors = ['#ff6bff', '#a855f7', '#60a5fa', '#f472b6', '#fbbf24', '#34d399'];
+            // confetti squares
+            for (let i = 0; i < 60; i++) {
+                const el = document.createElement('div');
+                el.className = 'confetti-piece';
+                el.style.left = Math.random() * 100 + '%';
+                el.style.background = colors[Math.floor(Math.random() * colors.length)];
+                el.style.animationDuration = (2.5 + Math.random() * 4) + 's';
+                el.style.animationDelay = (Math.random() * 3) + 's';
+                el.style.width = (7 + Math.random() * 8) + 'px';
+                el.style.height = (7 + Math.random() * 8) + 'px';
+                canvas.appendChild(el);
             }
-
-            /* ---- Milestone helpers ---- */
-            function showMilestone(id) {
-                const el = document.getElementById(id);
-                el.classList.add('visible');
+            // hearts raining
+            const heartEmojis = ['💜', '❤️', '💖', '💕', '✨', '🌸'];
+            for (let i = 0; i < 20; i++) {
+                const el = document.createElement('span');
+                el.className = 'confetti-heart';
+                el.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+                el.style.left = Math.random() * 100 + '%';
+                el.style.animationDuration = (3 + Math.random() * 4) + 's';
+                el.style.animationDelay = (Math.random() * 4) + 's';
+                canvas.appendChild(el);
             }
-            function hideMilestone(id) {
-                const el = document.getElementById(id);
-                el.classList.add('hiding');
-                el.addEventListener('transitionend', () => {
-                    el.classList.remove('visible', 'hiding');
-                }, { once: true });
+        }
+
+        /* ---- Dismiss buttons ---- */
+        document.getElementById('m1-dismiss').addEventListener('click', () => hideMilestone('milestone-1'));
+        document.getElementById('m2-dismiss').addEventListener('click', () => hideMilestone('milestone-2'));
+        document.getElementById('m3-dismiss').addEventListener('click', () => hideMilestone('milestone-3'));
+
+        /* ---- Milestone check on every tick ---- */
+        function checkMilestones() {
+            const totalMins = Math.floor(elapsedMs / 60000);
+            if (totalMins >= 60 && !shownMilestones.has(1)) {
+                shownMilestones.add(1);
+                spawnHearts();
+                showMilestone('milestone-1');
             }
-
-            /* ---- Milestone 1: floating hearts ---- */
-            function spawnHearts() {
-                const canvas = document.getElementById('m1-canvas');
-                canvas.innerHTML = '';
-                const emojis = ['❤️','💕','💖','💗','💓'];
-                for (let i = 0; i < 24; i++) {
-                    const el = document.createElement('span');
-                    el.className = 'floating-heart';
-                    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-                    el.style.left = Math.random() * 100 + '%';
-                    el.style.fontSize = (1 + Math.random() * 1.5) + 'rem';
-                    el.style.animationDuration = (4 + Math.random() * 6) + 's';
-                    el.style.animationDelay   = (Math.random() * 4) + 's';
-                    canvas.appendChild(el);
-                }
+            if (totalMins >= 120 && !shownMilestones.has(2)) {
+                shownMilestones.add(2);
+                showMilestone('milestone-2');
             }
-
-            /* ---- Milestone 3: confetti + hearts ---- */
-            function spawnConfetti() {
-                const canvas = document.getElementById('m3-canvas');
-                canvas.innerHTML = '';
-                const colors = ['#ff6bff','#a855f7','#60a5fa','#f472b6','#fbbf24','#34d399'];
-                // confetti squares
-                for (let i = 0; i < 60; i++) {
-                    const el = document.createElement('div');
-                    el.className = 'confetti-piece';
-                    el.style.left = Math.random() * 100 + '%';
-                    el.style.background = colors[Math.floor(Math.random() * colors.length)];
-                    el.style.animationDuration = (2.5 + Math.random() * 4) + 's';
-                    el.style.animationDelay   = (Math.random() * 3) + 's';
-                    el.style.width  = (7 + Math.random() * 8) + 'px';
-                    el.style.height = (7 + Math.random() * 8) + 'px';
-                    canvas.appendChild(el);
-                }
-                // hearts raining
-                const heartEmojis = ['💜','❤️','💖','💕','✨','🌸'];
-                for (let i = 0; i < 20; i++) {
-                    const el = document.createElement('span');
-                    el.className = 'confetti-heart';
-                    el.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
-                    el.style.left = Math.random() * 100 + '%';
-                    el.style.animationDuration = (3 + Math.random() * 4) + 's';
-                    el.style.animationDelay   = (Math.random() * 4) + 's';
-                    canvas.appendChild(el);
-                }
+            if (totalMins >= 180 && !shownMilestones.has(3)) {
+                shownMilestones.add(3);
+                spawnConfetti();
+                showMilestone('milestone-3');
             }
+        }
 
-            /* ---- Dismiss buttons ---- */
-            document.getElementById('m1-dismiss').addEventListener('click', () => hideMilestone('milestone-1'));
-            document.getElementById('m2-dismiss').addEventListener('click', () => hideMilestone('milestone-2'));
-            document.getElementById('m3-dismiss').addEventListener('click', () => hideMilestone('milestone-3'));
-
-            /* ---- Milestone check on every tick ---- */
-            function checkMilestones() {
-                const totalMins = Math.floor(elapsedMs / 60000);
-                if (totalMins >= 60 && !shownMilestones.has(1)) {
-                    shownMilestones.add(1);
-                    spawnHearts();
-                    showMilestone('milestone-1');
-                }
-                if (totalMins >= 120 && !shownMilestones.has(2)) {
-                    shownMilestones.add(2);
-                    showMilestone('milestone-2');
-                }
-                if (totalMins >= 180 && !shownMilestones.has(3)) {
-                    shownMilestones.add(3);
-                    spawnConfetti();
-                    showMilestone('milestone-3');
-                }
+        startStopBtn.addEventListener("click", () => {
+            if (intervalId === null) {
+                // Start / Resume
+                startStopBtn.textContent = "Pausar";
+                const startTimestamp = Date.now() - elapsedMs;
+                intervalId = setInterval(() => {
+                    elapsedMs = Date.now() - startTimestamp;
+                    renderTime();
+                    checkMilestones();
+                }, 1000);
+            } else {
+                // Pause
+                clearInterval(intervalId);
+                intervalId = null;
+                startStopBtn.textContent = "Continuar";
             }
+        });
 
-            startStopBtn.addEventListener("click", () => {
-                if (intervalId === null) {
-                    // Start / Resume
-                    startStopBtn.textContent = "Pausar";
-                    const startTimestamp = Date.now() - elapsedMs;
-                    intervalId = setInterval(() => {
-                        elapsedMs = Date.now() - startTimestamp;
-                        renderTime();
-                        checkMilestones();
-                    }, 1000);
-                } else {
-                    // Pause
-                    clearInterval(intervalId);
-                    intervalId = null;
-                    startStopBtn.textContent = "Continuar";
-                }
-            });
+        // Ao entrar na página, mostra 00:00:00 preparado
+        renderTime();
 
-            // Ao entrar na página, mostra 00:00:00 preparado
-            renderTime();
+        /***********************  Wake-lock para manter a tela ativa  ************************/
+        let wakeLock = null;
 
-            /***********************  Wake-lock para manter a tela ativa  ************************/
-            let wakeLock = null;
-
-            async function requestWakeLock() {
-                try {
-                    wakeLock = await navigator.wakeLock?.request?.("screen");
-                } catch (err) {
-                    console.error(`${err.name}, ${err.message}`);
-                }
+        async function requestWakeLock() {
+            try {
+                wakeLock = await navigator.wakeLock?.request?.("screen");
+            } catch (err) {
+                console.error(`${err.name}, ${err.message}`);
             }
+        }
 
-            async function releaseWakeLock() {
-                if (wakeLock !== null) {
-                    await wakeLock.release();
-                    wakeLock = null;
-                }
+        async function releaseWakeLock() {
+            if (wakeLock !== null) {
+                await wakeLock.release();
+                wakeLock = null;
             }
+        }
 
-            document.addEventListener("visibilitychange", async () => {
-                if (document.visibilityState === "visible") {
-                    await requestWakeLock();
-                } else {
-                    await releaseWakeLock();
-                }
-            });
+        document.addEventListener("visibilitychange", async () => {
+            if (document.visibilityState === "visible") {
+                await requestWakeLock();
+            } else {
+                await releaseWakeLock();
+            }
+        });
 
-            requestWakeLock();
-        </script>
+        requestWakeLock();
+    </script>
 
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"
-        ></script>
-    </body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
 </html>
