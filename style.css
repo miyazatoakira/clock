@@ -503,3 +503,242 @@
     animation: confettiFall linear infinite;
     pointer-events: none;
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   MILESTONE 4 — 4 HOURS  (emerald / crystal royalty)
+───────────────────────────────────────────────────────────────────────── */
+
+/* -- Keyframes -- */
+@keyframes auroraShift {
+    0%   { background-position: 0% 50%;   opacity: 0.5; }
+    25%  { background-position: 50% 80%;  opacity: 0.7; }
+    50%  { background-position: 100% 50%; opacity: 0.5; }
+    75%  { background-position: 50% 20%;  opacity: 0.7; }
+    100% { background-position: 0% 50%;   opacity: 0.5; }
+}
+@keyframes diamondRise {
+    0%   { transform: translateY(20px) scale(0.5) rotate(0deg);   opacity: 0; }
+    15%  { opacity: 1; }
+    85%  { opacity: 1; }
+    100% { transform: translateY(-110vh) scale(1.1) rotate(180deg); opacity: 0; }
+}
+@keyframes prismPulse {
+    0%   { transform: scale(0); opacity: 0; }
+    50%  { transform: scale(1);   opacity: 0.9; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+@keyframes crownFloat {
+    0%, 100% { transform: translateY(0)   rotate(-2deg); }
+    50%      { transform: translateY(-10px) rotate(2deg); }
+}
+@keyframes crownGlow {
+    0%, 100% { filter: drop-shadow(0 0 16px rgba(80,255,180,0.6))
+                       drop-shadow(0 0 40px rgba(0,230,168,0.3)); }
+    50%      { filter: drop-shadow(0 0 28px rgba(80,255,200,1))
+                       drop-shadow(0 0 60px rgba(0,255,180,0.5)); }
+}
+@keyframes raysRotate {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+@keyframes shimmerSlide {
+    0%   { background-position: -200% 0; }
+    100% { background-position: 200% 0;  }
+}
+@keyframes emeraldTitle {
+    0%   { background-position: 0% 50%;   }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%;   }
+}
+@keyframes cardEntrance {
+    0%   { transform: scale(0.85) translateY(30px); opacity: 0; }
+    100% { transform: scale(1)    translateY(0);    opacity: 1; }
+}
+
+/* -- Background -- */
+#milestone-4 {
+    background: linear-gradient(160deg, #001a12 0%, #00332a 30%, #004d40 60%, #00382e 100%);
+}
+
+/* -- Aurora layer -- */
+#milestone-4 .m4-aurora {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 80% 50% at 20% 60%, rgba(0,230,168,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 40% at 70% 30%, rgba(80,255,200,0.14) 0%, transparent 60%),
+        radial-gradient(ellipse 90% 60% at 50% 80%, rgba(0,180,140,0.12) 0%, transparent 70%);
+    background-size: 200% 200%;
+    animation: auroraShift 12s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/* -- Particle canvas -- */
+#milestone-4 .m-canvas {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/* -- Card -- */
+#milestone-4 .m-card-inner {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(145deg, rgba(0,80,60,0.22) 0%, rgba(0,50,40,0.35) 100%);
+    backdrop-filter: blur(22px) saturate(1.4);
+    -webkit-backdrop-filter: blur(22px) saturate(1.4);
+    border: 1px solid rgba(80,255,200,0.25);
+    box-shadow:
+        0 0 100px rgba(0,230,168,0.18),
+        0 0 40px rgba(80,255,200,0.10),
+        0 24px 80px rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+    animation: cardEntrance 0.9s cubic-bezier(.22,1,.36,1) forwards;
+}
+
+/* -- Prismatic rays behind icon -- */
+#milestone-4 .m4-rays {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 340px;
+    height: 340px;
+    transform: translate(-50%, -50%);
+    background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        rgba(80,255,200,0.06) 15deg,
+        transparent 30deg,
+        rgba(0,230,168,0.04) 45deg,
+        transparent 60deg,
+        rgba(80,255,200,0.06) 75deg,
+        transparent 90deg,
+        rgba(0,230,168,0.04) 105deg,
+        transparent 120deg,
+        rgba(80,255,200,0.06) 135deg,
+        transparent 150deg,
+        rgba(0,230,168,0.04) 165deg,
+        transparent 180deg,
+        rgba(80,255,200,0.06) 195deg,
+        transparent 210deg,
+        rgba(0,230,168,0.04) 225deg,
+        transparent 240deg,
+        rgba(80,255,200,0.06) 255deg,
+        transparent 270deg,
+        rgba(0,230,168,0.04) 285deg,
+        transparent 300deg,
+        rgba(80,255,200,0.06) 315deg,
+        transparent 330deg,
+        rgba(0,230,168,0.04) 345deg,
+        transparent 360deg
+    );
+    border-radius: 50%;
+    animation: raysRotate 20s linear infinite;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+/* -- Crown icon -- */
+#milestone-4 .m-icon {
+    font-size: 5rem;
+    line-height: 1;
+    animation: crownFloat 3s ease-in-out infinite, crownGlow 2.5s ease-in-out infinite;
+    z-index: 2;
+    position: relative;
+}
+
+/* -- Title -- */
+#milestone-4 .m-title {
+    font-size: 2.3rem;
+    font-family: 'Cinzel Decorative', 'gotham-bold', serif;
+    background: linear-gradient(270deg, #50ffc0, #00e6a8, #a0fff0, #50ffc0);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: emeraldTitle 4s ease infinite;
+    letter-spacing: 3px;
+    text-shadow: none;
+}
+
+/* -- Message -- */
+#milestone-4 .m-msg {
+    font-size: 1.12rem;
+    color: rgba(200,255,235,0.92);
+    line-height: 1.75;
+}
+
+/* -- Extra message -- */
+#milestone-4 .m-msg-extra {
+    font-family: 'gotham-medium', cursive;
+    font-size: 1.05rem;
+    color: rgba(150,255,210,0.88);
+    letter-spacing: 0.5px;
+    line-height: 1.65;
+}
+
+/* -- Inspirational quote -- */
+#milestone-4 .m4-quote {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.82rem;
+    color: rgba(80,255,200,0.55);
+    letter-spacing: 2px;
+    margin-top: 4px;
+    padding: 8px 20px;
+    border-top: 1px solid rgba(80,255,200,0.15);
+    border-bottom: 1px solid rgba(80,255,200,0.15);
+}
+
+/* -- Dismiss button -- */
+#milestone-4 .m-dismiss {
+    background: linear-gradient(90deg, #00b386, #00e6a8, #50ffc0, #00e6a8, #00b386);
+    background-size: 300% 100%;
+    animation: emeraldTitle 3s ease infinite;
+    color: #001a12;
+    font-weight: bold;
+    box-shadow: 0 4px 24px rgba(0,230,168,0.40), 0 0 40px rgba(80,255,200,0.15);
+    position: relative;
+    overflow: hidden;
+}
+#milestone-4 .m-dismiss::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        105deg,
+        transparent 40%,
+        rgba(255,255,255,0.35) 45%,
+        rgba(255,255,255,0.35) 50%,
+        transparent 55%
+    );
+    background-size: 200% 100%;
+    animation: shimmerSlide 3s ease-in-out infinite;
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+/* -- Floating diamonds -- */
+.floating-diamond {
+    position: absolute;
+    bottom: -30px;
+    opacity: 0;
+    animation: diamondRise linear infinite;
+    user-select: none;
+    pointer-events: none;
+}
+
+/* -- Prismatic sparkles -- */
+.prism-sparkle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(80,255,200,0.9) 0%, transparent 70%);
+    opacity: 0;
+    animation: prismPulse ease-out infinite;
+    pointer-events: none;
+}

@@ -139,6 +139,30 @@
         </div>
     </div>
 
+    <!-- ============================================================
+             MILESTONE 4 — 4 HOURS  (emerald / crystal royalty)
+        ============================================================ -->
+    <div id="milestone-4" class="milestone-overlay">
+        <div class="m-canvas" id="m4-canvas"></div>
+        <div class="m4-aurora"></div>
+        <div class="milestone-card m-card-inner">
+            <div class="m4-rays"></div>
+            <div class="m-icon">👑</div>
+            <div class="m-title">Quatro horas, minha princesa.</div>
+            <div class="m-msg">
+                I N C R Í V E L ! ! !
+            </div>
+            <div class="m-msg-extra">
+                Quatro horas de pura dedicação...<br>
+                Nosso futuro será LINDO!!!!!
+            </div>
+            <div class="m4-quote">
+                "O Pensamento e a Palavra são inseparáveis."
+            </div>
+            <button class="m-dismiss" id="m4-dismiss">Amo você, mor !</button>
+        </div>
+    </div>
+
     <!-- Script dedicado à página do cronômetro. -->
     <script>
         /***********************  Gestão de tema (dia/noite)  ************************/
@@ -286,10 +310,41 @@
             }
         }
 
+        /* ---- Milestone 4: floating diamonds + aurora ---- */
+        function spawnDiamonds() {
+            const canvas = document.getElementById('m4-canvas');
+            canvas.innerHTML = '';
+            const gems = ['💎', '✦', '✧', '⬥', '❖'];
+            const colors = ['#50ffc0', '#00e6a8', '#80ffe0', '#a0fff0', '#ffffff'];
+            for (let i = 0; i < 35; i++) {
+                const el = document.createElement('span');
+                el.className = 'floating-diamond';
+                el.textContent = gems[Math.floor(Math.random() * gems.length)];
+                el.style.left = Math.random() * 100 + '%';
+                el.style.fontSize = (0.6 + Math.random() * 1.4) + 'rem';
+                el.style.color = colors[Math.floor(Math.random() * colors.length)];
+                el.style.animationDuration = (5 + Math.random() * 8) + 's';
+                el.style.animationDelay = (Math.random() * 5) + 's';
+                el.style.filter = `drop-shadow(0 0 ${4 + Math.random() * 8}px ${colors[Math.floor(Math.random() * colors.length)]})`;
+                canvas.appendChild(el);
+            }
+            // Prismatic light sparkles
+            for (let i = 0; i < 18; i++) {
+                const el = document.createElement('div');
+                el.className = 'prism-sparkle';
+                el.style.left = Math.random() * 100 + '%';
+                el.style.top = Math.random() * 100 + '%';
+                el.style.animationDuration = (1.5 + Math.random() * 3) + 's';
+                el.style.animationDelay = (Math.random() * 4) + 's';
+                canvas.appendChild(el);
+            }
+        }
+
         /* ---- Dismiss buttons ---- */
         document.getElementById('m1-dismiss').addEventListener('click', () => hideMilestone('milestone-1'));
         document.getElementById('m2-dismiss').addEventListener('click', () => hideMilestone('milestone-2'));
         document.getElementById('m3-dismiss').addEventListener('click', () => hideMilestone('milestone-3'));
+        document.getElementById('m4-dismiss').addEventListener('click', () => hideMilestone('milestone-4'));
 
         /* ---- Milestone check on every tick ---- */
         function checkMilestones() {
@@ -307,6 +362,11 @@
                 shownMilestones.add(3);
                 spawnConfetti();
                 showMilestone('milestone-3');
+            }
+            if (totalMins >= 240 && !shownMilestones.has(4)) {
+                shownMilestones.add(4);
+                spawnDiamonds();
+                showMilestone('milestone-4');
             }
         }
 
