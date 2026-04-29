@@ -163,6 +163,37 @@
         </div>
     </div>
 
+    <!-- ============================================================
+             MILESTONE 5 — 5 HOURS  (oceanic cosmos / Pessoa)
+        ============================================================ -->
+    <div id="milestone-5" class="milestone-overlay">
+        <div class="m-canvas" id="m5-canvas"></div>
+        <div class="m5-ocean-glow"></div>
+        <div class="milestone-card m-card-inner">
+            <div class="m5-compass-rays"></div>
+            <div class="m-icon">🌟</div>
+            <div class="m-title">Cinco horas.</div>
+            <div class="m5-pessoa-quote">
+                <span class="m5-quote-line">"Valeu a pena?</span>
+                <span class="m5-quote-line">Tudo vale a pena</span>
+                <span class="m5-quote-line">se a Alma não é pequena."</span>
+                <span class="m5-quote-author">— Fernando Pessoa</span>
+            </div>
+            <div class="m5-divider"></div>
+            <div class="m-msg">
+                A sua alma é gigante, Marcela.<br>
+                Cinco horas, e você ainda aqui,<br>
+                inabalável, determinada.
+            </div>
+            <div class="m-msg-extra">
+                Cada minuto desse esforço<br>
+                constrói o futuro que você merece.<br>
+                E eu estarei ao seu lado em cada passo. 🌊
+            </div>
+            <button class="m-dismiss" id="m5-dismiss">Navegar é preciso ⚓</button>
+        </div>
+    </div>
+
     <!-- Script dedicado à página do cronômetro. -->
     <script>
         /***********************  Gestão de tema (dia/noite)  ************************/
@@ -340,11 +371,51 @@
             }
         }
 
+        /* ---- Milestone 5: starfield + ocean waves ---- */
+        function spawnStarfield() {
+            const canvas = document.getElementById('m5-canvas');
+            canvas.innerHTML = '';
+            // Twinkling stars
+            const starColors = ['#c0d0ff', '#e0e8ff', '#a0b8e0', '#f0f4ff', '#8090c0'];
+            for (let i = 0; i < 50; i++) {
+                const el = document.createElement('div');
+                el.className = 'ocean-star';
+                el.style.left = Math.random() * 100 + '%';
+                el.style.top = Math.random() * 100 + '%';
+                el.style.width = (1.5 + Math.random() * 3) + 'px';
+                el.style.height = el.style.width;
+                el.style.background = starColors[Math.floor(Math.random() * starColors.length)];
+                el.style.animationDuration = (2 + Math.random() * 4) + 's';
+                el.style.animationDelay = (Math.random() * 5) + 's';
+                el.style.boxShadow = `0 0 ${3 + Math.random() * 6}px ${starColors[Math.floor(Math.random() * starColors.length)]}`;
+                canvas.appendChild(el);
+            }
+            // Slow-drifting wave-light particles
+            const waveEmojis = ['·', '✦', '·', '✧', '·'];
+            for (let i = 0; i < 20; i++) {
+                const el = document.createElement('span');
+                el.className = 'ocean-drift';
+                el.textContent = waveEmojis[Math.floor(Math.random() * waveEmojis.length)];
+                el.style.left = Math.random() * 100 + '%';
+                el.style.fontSize = (0.5 + Math.random() * 0.8) + 'rem';
+                el.style.color = starColors[Math.floor(Math.random() * starColors.length)];
+                el.style.animationDuration = (8 + Math.random() * 12) + 's';
+                el.style.animationDelay = (Math.random() * 6) + 's';
+                canvas.appendChild(el);
+            }
+            // Animate the quote lines with staggered reveal
+            const quoteLines = document.querySelectorAll('#milestone-5 .m5-quote-line, #milestone-5 .m5-quote-author');
+            quoteLines.forEach((line, i) => {
+                line.style.animationDelay = (0.8 + i * 1.2) + 's';
+            });
+        }
+
         /* ---- Dismiss buttons ---- */
         document.getElementById('m1-dismiss').addEventListener('click', () => hideMilestone('milestone-1'));
         document.getElementById('m2-dismiss').addEventListener('click', () => hideMilestone('milestone-2'));
         document.getElementById('m3-dismiss').addEventListener('click', () => hideMilestone('milestone-3'));
         document.getElementById('m4-dismiss').addEventListener('click', () => hideMilestone('milestone-4'));
+        document.getElementById('m5-dismiss').addEventListener('click', () => hideMilestone('milestone-5'));
 
         /* ---- Milestone check on every tick ---- */
         function checkMilestones() {
@@ -367,6 +438,11 @@
                 shownMilestones.add(4);
                 spawnDiamonds();
                 showMilestone('milestone-4');
+            }
+            if (totalMins >= 300 && !shownMilestones.has(5)) {
+                shownMilestones.add(5);
+                spawnStarfield();
+                showMilestone('milestone-5');
             }
         }
 
